@@ -372,6 +372,8 @@ endfunction " }}}2
 
 "refresh and redraw all the error info for this buf when saving or reading
 function! s:UpdateErrors(buf, auto_invoked, checker_names) abort " {{{2
+    silent doautocmd User UpdateErrorsPre
+
     call syntastic#log#debugShowVariables(g:_SYNTASTIC_DEBUG_TRACE, 'version')
     call syntastic#log#debugShowOptions(g:_SYNTASTIC_DEBUG_TRACE, s:_DEBUG_DUMP_OPTIONS)
     call syntastic#log#debugDump(g:_SYNTASTIC_DEBUG_VARIABLES)
@@ -428,6 +430,8 @@ function! s:UpdateErrors(buf, auto_invoked, checker_names) abort " {{{2
     " }}}3
 
     call s:notifiers.refresh(loclist)
+
+    silent doautocmd User UpdateErrorsPost
 endfunction " }}}2
 
 "clear the loc list for the buffer
